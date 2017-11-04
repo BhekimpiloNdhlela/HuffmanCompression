@@ -1,13 +1,16 @@
 #include "utilities.h"
 
 /**
- * 
+ * convert decimal number to binary.
+ *
+ * @param[in]  n      the number in binary format
+ * @param[in]  size   the size of the huffman code
  */
 char *dec_to_bin(int n, int size)
 {
     int k, j, i = 0;
-    char *code = emalloc(size - 1);
-    for (j = size - 1; j >= 0; j--)  {
+    char *code = emalloc(size);
+    for (j = size ; j >= 0; j--)  {
         k = n >> j;
         code[i++] = (k & 1) ? 1 + '0': 0 + '0';
     }
@@ -15,9 +18,13 @@ char *dec_to_bin(int n, int size)
     return  code;
 }
 
+
 /**
+ * emalloc equivalent, dont have to check if memory was allocated successfully
+ * in the client code.
  *
- *
+ * @param[in]   size      the size needed from the heap in bytes.
+ * @param[out]  mem_add   the address of allocated space in the heap.
  */
 void *emalloc(size_t size)
 {
@@ -29,9 +36,14 @@ void *emalloc(size_t size)
 	return mem_address;
 }
 
+
 /**
+ * open file and then check if it was opened successfully. the client does not have
+ * to check if the file was opended successfully.
  *
- *
+ * @param[in]    filename    the name of the file name to be opened.
+ * @param[in]    mode        the mode of which the file is to be opened in.
+ * @return[out]  file_ptr    the pointer of opened file
  */
 FILE *open_file(const char *filename, const char *mode)
 {
@@ -43,64 +55,37 @@ FILE *open_file(const char *filename, const char *mode)
 	return file_ptr;	
 }
 
+
 /**
+ * the file that writes the compressed file. 
  *
+ * @param[in]  in_name   name of input file.
+ * @param[in]  fmap 	 the map with the huffman codes.
+ * @param[in]  tchars    total chars in file.
+ * @param[in]  nchars    number of unique chars.
+ * @param[in]  freq      frequency map of the chars is the file.
  */
 void write_compressed_file(const char *in_name, char **fmap, int tchars, int nchars, int *freq)
 {
-    unsigned int i, c;
-	FILE *input_f, *output_f;
+	unsigned int i, c;
+	FILE *inf, *of;
     char out_name[100];
 	strcpy(out_name, in_name);
 	strcat(out_name, ".cz\0");
-    output_f = open_file(out_name, "w");
-    fprintf(output_f, "%d", nchars);
-    
+    of = open_file(out_name, "wb");
+
+	fwrite(&nchars, 1, 4, of);
     for (i = 0; i < 256; i++){ 
-       if (freq[i] == 0) continue;
-       fprintf(output_f, "%c%d", i, freq[i]);
+		if (freq[i] == 0) continue;
+		fwrite(&i, 1, 1 , of);
+		fwrite(&freq[i], 1, 4 , of);
     }
 
-    /*should i put a line after the header*/
-    input_f = open_file(in_name, "r");
-    while ((c = fgetc(input_f)) != EOF) 
-        fprintf(output_f, "%s", fmap[c]);
-    
-    /*close the files*/
-    fclose(input_f);
-    fclose(output_f);
-	fprintf(stderr, "<%s> successfully compressed to <%s>\n", in_name, out_name);
-}
-
-/**
- *
- *
- */
-void view_freq_map(int *frequency_map, int tchars, int nchars)
-{
-	int i;
-	printf("TOTAL OF CHARS  = \t\t< %d >\n", tchars);
-	printf("NUMBER OF CHARS = \t\t< %d >\n", nchars);
-    for (i = 0; i < 256; i++) {
-        if (frequency_map[i] == 0) continue;
-        if (i == 10)
-           printf("c:[nl],\t i:[%d], \tf:[%d]\n", i, frequency_map[i]);
-		else if (i == 9)
-           printf("c:[tb],\t i:[%d], \tf:[%d]\n", i, frequency_map[i]);
-        else
-            printf("c:[%c],\t i:[%d], \tf:[%d]\n", i, i, frequency_map[i]);
+    inf = open_file(in_name, "r");
+	while ((c = fgetc(inf)) != EOF) { 
+		fwrite(fmap[c], 1, strlen(fmap[c]), of);
     }
-}
-
-/**
- *
- * @param t[in]  
- */
-void view_code_table(char *t[])
-{
-	int i;
-	for (i = 0; i < 256; i++) 
-		if (t[i] != '\0') {
-			fprintf(stderr,"size: [%lu], char index: [%c], code: %s\n", strlen(t[i]),i, t[i]);  
-    }
+	
+    fclose(inf);
+    fclose(of);
 }
