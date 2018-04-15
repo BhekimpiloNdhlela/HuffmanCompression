@@ -39,9 +39,8 @@ void c_heap_remove(Heap *H, HeapNode *node)
     p = 0;
     c = 2 * p + 1;
     while (c <= H->n - 1) {
-      if (H->a[c].frequency >= H->a[c + 1].frequency) {
+      if (H->a[c].frequency >= H->a[c + 1].frequency)
         c = c + 1;
-      }
       if (H->a[c].frequency <= H->a[p].frequency) {
         hold = H->a[c];
         H->a[c] = H->a[p];

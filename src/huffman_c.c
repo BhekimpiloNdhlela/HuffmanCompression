@@ -40,11 +40,7 @@ void c_huffman_build_table(HeapNode *root, HuffmanNode *t, int c, int s)
     t[i].huffman_code = c + 1;
     return;
   } else {
-    if (root->right) {
-      c_huffman_build_table(root->right, t, c * 2, s + 1);
-    }
-    if (root->left) {
-      c_huffman_build_table(root->left, t, (c * 2) + 1, s + 1);
-    }
+    if (root->right) c_huffman_build_table(root->right, t, c * 2, s + 1);
+    if (root->left)  c_huffman_build_table(root->left, t, (c * 2) + 1, s + 1);
   }
 }

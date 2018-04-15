@@ -75,9 +75,8 @@ void compress(int *char_freq, const char *in_name)
   c_huffman_build_table(HN, t, 0, 0);
 
   /* making the huffman encoding with the aid of dec_to_bin from utilities.c */
-  for ( i = 0; i < MAX_HEAP_SIZE; i++) {
+  for ( i = 0; i < MAX_HEAP_SIZE; i++)
     fmap[i] = (t[i].bit_size != 0) ? dec_to_bin(t[i].huffman_code, t[i].bit_size) : '\0';
-  }
   write_compressed_file(in_name, fmap, total_chars, number_chars, char_freq);
   free(t);
 }

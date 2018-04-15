@@ -57,7 +57,7 @@ FILE *open_file(const char *filename, const char *mode)
  * the file that writes the compressed file.
  *
  * @param[in]  in_name   name of input file.
- * @param[in]  fmap 	 the map with the huffman codes.
+ * @param[in]  fmap      the map with the huffman codes.
  * @param[in]  tchars    total chars in file.
  * @param[in]  nchars    number of unique chars.
  * @param[in]  freq      frequency map of the chars is the file.
@@ -65,7 +65,7 @@ FILE *open_file(const char *filename, const char *mode)
 void write_compressed_file(const char *in_name, char **fmap, int tchars, int nchars, int *freq)
 {
   unsigned int i, c;
-  FILE *inf, *of;
+  FILE *in_file, *of;
   char out_name[100];
   strcpy(out_name, in_name);
   strcat(out_name, ".cz\0");
@@ -77,8 +77,8 @@ void write_compressed_file(const char *in_name, char **fmap, int tchars, int nch
     fwrite(&freq[i], 1, 4 , of);
   }
   inf = open_file(in_name, "r");
-  while ((c = fgetc(inf)) != EOF)
+  while ((c = fgetc(in_file)) != EOF)
     fwrite(fmap[c], 1, strlen(fmap[c]), of);
-  fclose(inf);
+  fclose(in_file);
   fclose(of);
 }

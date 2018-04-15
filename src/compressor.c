@@ -63,10 +63,10 @@ void compress(int *char_freq, const char *in_name)
   c_heap_initialize(&H);
   for (i = 0; i < MAX_HEAP_SIZE; i++) {
     if (char_freq[i] != 0) {
-        HN = emalloc(sizeof(HeapNode));
-        HN->frequency = char_freq[i];
-        HN->c = i;
-        c_heap_insert(&H, HN);
+      HN = emalloc(sizeof(HeapNode));
+      HN->frequency = char_freq[i];
+      HN->c = i;
+      c_heap_insert(&H, HN);
     }
   }
   c_huffman_initialize_table(t);
@@ -74,7 +74,7 @@ void compress(int *char_freq, const char *in_name)
   c_huffman_build_table(HN, t, 0, 0);
   /* making the huffman encoding with the aid of dec_to_bin from utilities.c */
   for ( i = 0; i < MAX_HEAP_SIZE; i++) {
-        fmap[i] = (t[i].bit_size != 0) ? dec_to_bin(t[i].huffman_code, t[i].bit_size) : '\0';
+    fmap[i] = (t[i].bit_size != 0) ? dec_to_bin(t[i].huffman_code, t[i].bit_size) : '\0';
   }
   write_compressed_file(in_name, fmap, total_chars, number_chars, char_freq);
   view_code_table(fmap);
