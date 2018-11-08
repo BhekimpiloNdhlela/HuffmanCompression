@@ -8,14 +8,14 @@
  */
 char *dec_to_bin(int n, int size)
 {
-  int k, j, i = 0;
-  char *code = emalloc(size);
-  for (j = size ; j >= 0; j--)  {
-    k = n >> j;
-    code[i++] = (k & 1) ? 1 + '0': 0 + '0';
-  }
-  code[i] = '\0';
-  return  code;
+    int k, j, i = 0;
+    char *code = emalloc(size);
+    for (j = size ; j >= 0; j--)  {
+        k = n >> j;
+        code[i++] = (k & 1) ? 1 + '0': 0 + '0';
+    }
+    code[i] = '\0';
+    return  code;
 }
 
 /**
@@ -27,12 +27,12 @@ char *dec_to_bin(int n, int size)
  */
 void *emalloc(size_t size)
 {
-  void *mem_address;
-  if ((mem_address = malloc(size)) == NULL) {
-    fprintf(stderr,"error: malloc of %lu bytes failed:", size);
-    exit(EXIT_FAILURE);
-  }
-  return mem_address;
+    void *mem_address;
+    if ((mem_address = malloc(size)) == NULL) {
+        fprintf(stderr,"error: malloc of %lu bytes failed:", size);
+        exit(EXIT_FAILURE);
+    }
+    return mem_address;
 }
 
 /**
@@ -45,12 +45,12 @@ void *emalloc(size_t size)
  */
 FILE *open_file(const char *filename, const char *mode)
 {
-  FILE *file_ptr;
-  if ((file_ptr = fopen(filename, mode)) == NULL) {
-    fprintf(stderr, "error: could not read file: <%s>\n", filename);
-    exit(EXIT_FAILURE);
-  }
-  return file_ptr;
+    FILE *file_ptr;
+    if ((file_ptr = fopen(filename, mode)) == NULL) {
+        fprintf(stderr, "error: could not read file: <%s>\n", filename);
+        exit(EXIT_FAILURE);
+    }
+    return file_ptr;
 }
 
 /**
@@ -64,21 +64,22 @@ FILE *open_file(const char *filename, const char *mode)
  */
 void write_compressed_file(const char *in_name, char **fmap, int tchars, int nchars, int *freq)
 {
-  unsigned int i, c;
-  FILE *in_file, *of;
-  char out_name[100];
-  strcpy(out_name, in_name);
-  strcat(out_name, ".cz\0");
-  of = open_file(out_name, "wb");
-  fwrite(&nchars, 1, 4, of);
-  for (i = 0; i < 256; i++) {
-    if (freq[i] == 0) continue;
-    fwrite(&i, 1, 1 , of);
-    fwrite(&freq[i], 1, 4 , of);
-  }
-  inf = open_file(in_name, "r");
-  while ((c = fgetc(in_file)) != EOF)
-    fwrite(fmap[c], 1, strlen(fmap[c]), of);
-  fclose(in_file);
-  fclose(of);
+    unsigned int i, c;
+    FILE *in_file, *of;
+    char out_name[100];
+    strcpy(out_name, in_name);
+    strcat(out_name, ".cz\0");
+    of = open_file(out_name, "wb");
+    fwrite(&nchars, 1, 4, of);
+    for (i = 0; i < 256; i++) {
+        if (freq[i] == 0) continue;
+        fwrite(&i, 1, 1 , of);
+        fwrite(&freq[i], 1, 4 , of);
+    }
+    inf = open_file(in_name, "r");
+    while ((c = fgetc(in_file)) != EOF) {
+        fwrite(fmap[c], 1, strlen(fmap[c]), of);
+    }
+    fclose(in_file);
+    fclose(of);
 }

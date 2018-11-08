@@ -3,6 +3,10 @@
 
 #define MAX_HEAP_SIZE 256
 
+void heap_initialize(Heap *H);
+void heap_remove(Heap *H, HeapNode *node);
+void heap_insert(Heap *H, HeapNode *node);
+
 typedef struct heap_node HeapNode;
 struct heap_node {
 	int frequency;
@@ -33,7 +37,7 @@ void heap_initialize(Heap *H);
 void heap_remove(Heap *H, HeapNode *node);
 
 /**
- * iInserts the <code>node</code> into the heap <code>H</code> 
+ * iInserts the <code>node</code> into the heap <code>H</code>
  * according to Algorithm 2.
  *
  * @param[in]      H     the heap

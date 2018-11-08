@@ -14,5 +14,4 @@ void success(const char *, const char *);
 FILE *open_file(const char *, const char *);
 void write_compressed_file(const char *, char **, int, int, int *);
 
-
 #endif

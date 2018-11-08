@@ -2,6 +2,13 @@
 #define HUFFMAN_H
 
 #include "heap.h"
+#include "huffman.h"
+
+void huffman_build_tree(Heap *h, HeapNode **t);
+void huffman_initialize_table(HuffmanNode *t);
+void huffman_build_table(HeapNode *root, HuffmanNode *t, int code, int size);
+void huffman_show_table(HuffmanNode *t);
+void huffman_show_tree(HeapNode *t, int l);
 
 typedef struct huffman_node {
 	int huffman_code;
