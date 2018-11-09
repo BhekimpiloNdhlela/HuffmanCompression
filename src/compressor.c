@@ -1,6 +1,6 @@
-#include "utilities.c"
-#include "heap_c.c"
-#include "huffman_c.c"
+#include "../lib/utilities.h"
+#include "../lib/heap.h"
+#include "../lib/huffman.h"
 
 /* function proto-types */
 void compress(int *, const char *);
@@ -21,7 +21,12 @@ static unsigned int number_chars = 0;   /* the number of distinct  chars in inpu
 int main(int argc, char **argv)
 {
     int frequency[MAX_HEAP_SIZE] = { 0 };
-    set_char_frequency(argv[1], frequency);
+    if (argc == 2) {
+        set_char_frequency(argv[1], frequency);
+    } else {
+        puts(".: usage ./compressor <compress filename>");
+        return EXIT_FAILURE;
+    }
     return EXIT_SUCCESS;
 }
 
@@ -76,7 +81,8 @@ void compress(int *char_freq, const char *in_name)
     for ( i = 0; i < MAX_HEAP_SIZE; i++) {
         fmap[i] = (t[i].bit_size != 0) ? dec_to_bin(t[i].huffman_code, t[i].bit_size) : '\0';
     }
-    write_compressed_file(in_name, fmap, total_chars, number_chars, char_freq);
-    view_code_table(fmap);
+
+    write_compressed_file(in_name, fmap, total_chars, char_freq);
+    //view_code_table(fmap);
     free(t);
 }

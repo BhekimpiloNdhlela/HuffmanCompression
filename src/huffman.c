@@ -1,4 +1,6 @@
-#include "huffman.h"
+#include "../lib/huffman.h"
+#include "../lib/utilities.h"
+
 void huffman_build_tree(Heap *h, HeapNode **t)
 {
     while ((*h).n != 0) {
