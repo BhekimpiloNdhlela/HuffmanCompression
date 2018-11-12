@@ -41,6 +41,8 @@ void huffman_build_table(HeapNode *root, HuffmanNode *node, int code, int size)
     if (root->left) {
         huffman_build_table(root->left, node, (code << 1), size + 1);
     }
+    
+    //disclaimer: help from CJ's 
     if (root->right == NULL && root->left == NULL) {
         node[(int) root->c].huffman_code = code;
         node[(int) root->c].bit_size = size;
