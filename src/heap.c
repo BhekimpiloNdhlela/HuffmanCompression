@@ -1,5 +1,4 @@
-#include "../lib/heap.h"
-#include "../lib/utilities.h"
+#include "../lib/utils.h"
 
 void heap_initialize(Heap *H)
 {

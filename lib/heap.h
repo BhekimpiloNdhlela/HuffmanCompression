@@ -3,10 +3,6 @@
 
 #define MAX_HEAP_SIZE 256
 
-void heap_initialize(Heap *H);
-void heap_remove(Heap *H, HeapNode *node);
-void heap_insert(Heap *H, HeapNode *node);
-
 typedef struct heap_node HeapNode;
 struct heap_node {
 	int frequency;
@@ -19,6 +15,10 @@ typedef struct heap {
 	int n;
 	HeapNode a[MAX_HEAP_SIZE];
 } Heap;
+
+void heap_initialize(Heap *H);
+void heap_remove(Heap *H, HeapNode *node);
+void heap_insert(Heap *H, HeapNode *node);
 
 /**
  * Initializes the heap by filling its memory area with 0 bits.

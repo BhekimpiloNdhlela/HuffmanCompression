@@ -1,9 +1,8 @@
-#include "../lib/huffman.h"
-#include "../lib/utilities.h"
+#include "../lib/utils.h"
 
 void huffman_build_tree(Heap *h, HeapNode **t)
 {
-    while ((*h).n != 0) {
+    while ((*h).n) {
         if ((*h).n == 1) {
             HeapNode x;
             heap_remove(h, &x);
@@ -34,15 +33,16 @@ void huffman_initialize_table(HuffmanNode *t)
     }
 }
 
-void huffman_build_table(HeapNode *root, HuffmanNode *t, int c, int s)
+void huffman_build_table(HeapNode *root, HuffmanNode *node, int code, int size)
 {
-    if (root->left == NULL && root->right == NULL) {
-        int i = (unsigned char)root->c;
-        t[i].bit_size = s + 1;
-        t[i].huffman_code = c + 1;
-        return;
-    } else {
-        if (root->right) huffman_build_table(root->right, t, c * 2, s + 1);
-        if (root->left)  huffman_build_table(root->left, t, (c * 2) + 1, s + 1);
+    if (root->right) {
+        huffman_build_table(root->right, node, (code << 1) + 1, size + 1);
+    }
+    if (root->left) {
+        huffman_build_table(root->left, node, (code << 1), size + 1);
+    }
+    if (root->right == NULL && root->left == NULL) {
+        node[(int) root->c].huffman_code = code;
+        node[(int) root->c].bit_size = size;
     }
 }
