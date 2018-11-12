@@ -23,7 +23,8 @@ void init_compression(const char *input_file_name)
     heap_initialize(heap);
     // count the unique characters
     while ((c = fgetc(input_file)) != EOF) freq[c] = freq[c] + 1;
-
+    fclose(input_file);
+    
     for (i = 0; i < MAX_HEAP_SIZE; i++) {
         if (!freq[i]) continue;
         HeapNode *node = emalloc(sizeof(HeapNode));
