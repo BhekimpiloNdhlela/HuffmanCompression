@@ -2,4 +2,4 @@
 
 
 ## TODO:
-  * Finally write a Huffman-decrompressor
+  * write a Huffman-decrompressor
