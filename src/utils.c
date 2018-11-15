@@ -75,8 +75,8 @@ void write_compressed(int *freq, HuffmanNode *hnode, const char *input_file_name
             if (((hnode[c].huffman_code >> i) % 2) == 1) {
                 buffer = (buffer | (1 << (7 - bit_size)));
             }
-
             bit_size = bit_size + 1;
+            
             if (bit_size == 8) {
                 fprintf(output_file, "%c", buffer);
                 bit_size = 0;

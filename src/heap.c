@@ -1,5 +1,10 @@
 #include "../lib/utils.h"
 
+/**
+ * Initializes the heap by filling its memory area with 0 bits.
+ *
+ * @param[in/out]  H     the heap space to initialize
+ */
 void heap_initialize(Heap *H)
 {
     H = emalloc(sizeof(struct heap));
@@ -7,6 +12,12 @@ void heap_initialize(Heap *H)
     memset((*H).a, 0, sizeof(HeapNode) * MAX_HEAP_SIZE);
 }
 
+/**
+ * iInserts the <code>node</code> into the heap <code>H</code>
+ *
+ * @param[in]      H     the heap
+ * @param[in]      node  the node to insert
+ */
 void heap_insert(Heap *H, HeapNode *n)
 {
     int c, p;
@@ -28,6 +39,12 @@ void heap_insert(Heap *H, HeapNode *n)
     H->n = H->n + 1;
 }
 
+/**
+ * Removes a node from the heap <code>H</code>
+ *
+ * @param[in]      H     the heap
+ * @param[out]     node  the node that was removed
+ */
 void heap_remove(Heap *H, HeapNode *node)
 {
     int p, c;

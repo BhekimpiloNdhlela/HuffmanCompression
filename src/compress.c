@@ -11,6 +11,13 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
+/**
+ * Initializes the compression of the input file. and also act as the middleware
+ * of the compression process. However, an extension for init_decompression will
+ * be included, at a later stage.
+ *
+ * @param[in]      H     the heap
+ */
 void init_compression(const char *input_file_name)
 {
     Heap *heap = emalloc(MAX_HEAP_SIZE * sizeof(Heap));
@@ -24,7 +31,7 @@ void init_compression(const char *input_file_name)
     // count the unique characters
     while ((c = fgetc(input_file)) != EOF) freq[c] = freq[c] + 1;
     fclose(input_file);
-    
+
     for (i = 0; i < MAX_HEAP_SIZE; i++) {
         if (!freq[i]) continue;
         HeapNode *node = emalloc(sizeof(HeapNode));
