@@ -7,8 +7,7 @@
  * @param[in]   size      the size needed from the heap in bytes.
  * @param[out]  mem_add   the address of allocated space in the heap.
  */
-void *emalloc(size_t requested_bytes)
-{
+void *emalloc(size_t requested_bytes) {
     void *allocated;
     if ((allocated = malloc(requested_bytes)) == NULL) {
         fprintf(stderr, ".:size of <%u bytes> failed\n", requested_bytes);
@@ -25,8 +24,7 @@ void *emalloc(size_t requested_bytes)
  * @param[in]    mode        the mode of which the file is to be opened in.
  * @return[out]  file_ptr    the pointer of opened file
  */
-FILE *open_file(const char *filename, const char *mode)
-{
+FILE *open_file(const char *filename, const char *mode) {
     FILE *file;
     if ((file = fopen(filename, mode)) == NULL) {
         fprintf(stderr, ".:failed to open file <%s>\n", filename);
@@ -44,8 +42,7 @@ FILE *open_file(const char *filename, const char *mode)
  * @param[in]  nchars    number of unique chars.
  * @param[in]  freq      frequency map of the chars is the file.
  */
-void write_compressed(int *freq, HuffmanNode *hnode, const char *input_file_name, int num_chars)
-{
+void write_compressed(int *freq, HuffmanNode *hnode, const char *input_file_name, int num_chars) {
     int bit_size = 0;
     char buffer = 0;
     FILE *input_file, *output_file;
@@ -76,13 +73,13 @@ void write_compressed(int *freq, HuffmanNode *hnode, const char *input_file_name
                 buffer = (buffer | (1 << (7 - bit_size)));
             }
             bit_size = bit_size + 1;
-            
+
             if (bit_size == 8) {
                 fprintf(output_file, "%c", buffer);
                 bit_size = 0;
                 buffer = 0;
             }
-       }
+        }
     }
 
     if (bit_size) fprintf(output_file, "%c", buffer);

@@ -5,8 +5,7 @@
  *
  * @param[in/out]  H     the heap space to initialize
  */
-void heap_initialize(Heap *H)
-{
+void heap_initialize(Heap *H) {
     H = emalloc(sizeof(struct heap));
     (*H).n = 0;
     memset((*H).a, 0, sizeof(HeapNode) * MAX_HEAP_SIZE);
@@ -18,8 +17,7 @@ void heap_initialize(Heap *H)
  * @param[in]      H     the heap
  * @param[in]      node  the node to insert
  */
-void heap_insert(Heap *H, HeapNode *n)
-{
+void heap_insert(Heap *H, HeapNode *n) {
     int c, p;
     H->a[H->n] = *n;
     c = H->n;
@@ -45,8 +43,7 @@ void heap_insert(Heap *H, HeapNode *n)
  * @param[in]      H     the heap
  * @param[out]     node  the node that was removed
  */
-void heap_remove(Heap *H, HeapNode *node)
-{
+void heap_remove(Heap *H, HeapNode *node) {
     int p, c;
     HeapNode hold;
     if (H->n >= 0) {

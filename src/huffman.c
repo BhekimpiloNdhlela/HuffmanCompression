@@ -8,8 +8,7 @@
  * @param[in/out] h     the minheap constructed to character frequencies
  * @param[out]    t     the root of the Huffman tree
  */
-void huffman_build_tree(Heap *h, HeapNode **t)
-{
+void huffman_build_tree(Heap *h, HeapNode **t) {
     while ((*h).n) {
         if ((*h).n == 1) {
             HeapNode x;
@@ -40,8 +39,7 @@ void huffman_build_tree(Heap *h, HeapNode **t)
  *
  * @param[in/out] t     a pointer to the space allocated for the Huffman table
  */
-void huffman_initialize_table(HuffmanNode *t)
-{
+void huffman_initialize_table(HuffmanNode *t) {
     int c;
     for (c = 0; c < MAX_HEAP_SIZE; c++) {
         t[c].huffman_code = 0;
@@ -63,8 +61,7 @@ void huffman_initialize_table(HuffmanNode *t)
  * @param[in]     size  the current length of the bitstring; to be called from
  *                      the main routine with <code>0</code>
  */
-void huffman_build_table(HeapNode *root, HuffmanNode *node, int code, int size)
-{
+void huffman_build_table(HeapNode *root, HuffmanNode *node, int code, int size) {
     if (root->right) {
         huffman_build_table(root->right, node, (code << 1) + 1, size + 1);
     }

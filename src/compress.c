@@ -1,10 +1,9 @@
 #include "../lib/utils.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     if (argc != 2) {
         fprintf(stderr, "usage ./compress <path to file>\n");
-        return EXIT_FAILURE;
+        exit(EXIT_FAILURE);
     }
     init_compression(argv[1]);
     fprintf(stderr, "successfully compressed input file: <%s.cz> was generated\n", argv[1]);
@@ -18,8 +17,7 @@ int main(int argc, char *argv[])
  *
  * @param[in]      H     the heap
  */
-void init_compression(const char *input_file_name)
-{
+void init_compression(const char *input_file_name) {
     Heap *heap = emalloc(MAX_HEAP_SIZE * sizeof(Heap));
     FILE *input_file = open_file(input_file_name, "r");
 
